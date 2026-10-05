@@ -1,1 +1,0 @@
-{{- $p := site.GetPage "/laboratorio" }}{{ if not $p }}{{ $p = site.GetPage "/lab" }}{{ end }}{{ with $p }}{{ .RelPermalink }}{{ end -}}

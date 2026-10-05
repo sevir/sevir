@@ -1,5 +1,0 @@
-{{- /* Bocadillo de diálogo: {{< bubble who="doctor" >}}texto{{< /bubble >}} */ -}}
-<div class="bubble-row bubble-row--{{ .Get "who" | default "doctor" }}">
-  <span class="bubble-row__face">{{ partial "head-face.html" }}</span>
-  <div class="mbubble mbubble--inline">{{ .Inner | .Page.RenderString }}</div>
-</div>
