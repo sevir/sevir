@@ -1,0 +1,33 @@
+# Nivel de poder (capítulo 4). level: 1-10. Es un cómic: ajusta a tu gusto.
+- name: Go
+  level: 10
+  color: blue
+  note: { es: "Agentes, MCP, CLIs", en: "Agents, MCP, CLIs" }
+- name: Rust
+  level: 9
+  color: red
+  note: { es: "Rendimiento y sistemas", en: "Performance and systems" }
+- name: TypeScript / Node.js
+  level: 9
+  color: yellow
+  note: { es: "Web, React, back-end", en: "Web, React, back-end" }
+- name: Python
+  level: 8
+  color: green
+  note: { es: "Datos, IA, scripts", en: "Data, AI, scripting" }
+- name: PHP
+  level: 10
+  color: pink
+  note: { es: "20 años de SaaS en producción", en: "20 years of SaaS in production" }
+- name: IA agéntica · MCP
+  level: 10
+  color: blue
+  note: { es: "Orquestación, memoria, herramientas", en: "Orchestration, memory, tools" }
+- name: DevOps
+  level: 8
+  color: green
+  note: { es: "Docker, CI/CD, Linux", en: "Docker, CI/CD, Linux" }
+- name: Liderazgo técnico
+  level: 9
+  color: red
+  note: { es: "CTO, arquitectura, mentoría", en: "CTO, architecture, mentoring" }

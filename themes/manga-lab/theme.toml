@@ -1,0 +1,7 @@
+name = "Manga Lab"
+license = "MIT"
+description = "Tema Hugo con estética de manga retro de los 80: viñetas, tramas, onomatopeyas y un laboratorio animado en SVG."
+min_version = "0.146.0"
+[author]
+  name = "José Francisco Rives Lirola"
+  homepage = "https://www.sevir.org"

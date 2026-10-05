@@ -1,0 +1,22 @@
+{{- /* Tarjeta de entrada como portada de número de cómic. */ -}}
+{{- $tag := index (.Params.tags | default (slice "notas")) 0 -}}
+{{- $palette := slice "red" "blue" "yellow" "green" "pink" -}}
+{{- $n := 0 }}{{ $self := . }}{{ range $i, $p := (where .Site.RegularPages "Section" "blog").ByDate }}{{ if eq $p $self }}{{ $n = add $i 1 }}{{ end }}{{ end -}}
+{{- $color := index $palette (mod $n 5) -}}
+<a class="panel post-card post-card--{{ $color }} pop" href="{{ .RelPermalink }}">
+  <span class="post-card__issue">{{ T "issue" }}{{ printf "%03d" $n }}</span>
+  <div class="post-card__cover">
+    {{- with .Params.cover }}
+      <img src="{{ . | relURL }}" alt="" loading="lazy" onerror="this.remove()" />
+    {{- else }}
+      <div class="speedlines" aria-hidden="true"></div>
+    {{- end }}
+    <span class="post-card__sfx" aria-hidden="true">{{ upper $tag }}!</span>
+  </div>
+  <div class="post-card__body">
+    <time class="post-card__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+    <h3 class="post-card__title">{{ .Title }}</h3>
+    <p class="post-card__lead">{{ .Description | default (.Summary | plainify | htmlUnescape | truncate 140) }}</p>
+    <span class="post-card__read">{{ T "read" }} →</span>
+  </div>
+</a>

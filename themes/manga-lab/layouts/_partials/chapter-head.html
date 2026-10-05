@@ -1,0 +1,7 @@
+{{- /* Portadilla de capítulo. dict "n" "kicker" "title" "id" "kana" */ -}}
+<header class="chap" {{ with .id }}id="{{ . }}"{{ end }}>
+  <span class="chap__num"><span class="chap__label">{{ T "chapter" }}</span><span class="chap__n">{{ .n }}</span></span>
+  <span class="chap__kicker">{{ .kicker }}</span>
+  <h2 class="chap__title">{{ .title }}</h2>
+  {{- with .kana }}<span class="chap__kana" aria-hidden="true">{{ . }}</span>{{ end }}
+</header>

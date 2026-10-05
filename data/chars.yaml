@@ -1,0 +1,47 @@
+# Generado por scripts/characters-svg.py — cajas, cuello, ojos y cabeza en píxeles de la ilustración (1526×1031)
+dad:
+  box: [495, 20, 340, 971]
+  neck: 238
+  pivot: [668, 238]
+  skin: '#fcb46e'
+  eyes:
+  - [652, 156, 21, 29]
+  - [713, 140, 19, 29]
+  head: [672, 30]
+mom:
+  box: [766, 50, 270, 931]
+  neck: 285
+  pivot: [872, 280]
+  skin: '#fdbd7b'
+  eyes:
+  - [826, 206, 15, 25]
+  - [886, 197, 17, 26]
+  head: [880, 62]
+kidA:
+  box: [447, 401, 243, 620]
+  neck: 560
+  pivot: [592, 560]
+  skin: '#fdb76f'
+  eyes:
+  - [570, 520, 16, 19]
+  - [625, 512, 16, 21]
+  head: [585, 402]
+kidB:
+  box: [819, 562, 203, 459]
+  neck: 724
+  pivot: [898, 724]
+  skin: '#fdba75'
+  eyes:
+  - [872, 673, 14, 19]
+  - [926, 673, 15, 20]
+  head: [905, 566]
+dog:
+  box: [624, 649, 268, 366]
+  neck: 842
+  pivot: [738, 842]
+  skin: '#252527'
+  eyes:
+  - [712, 741, 12, 17]
+  - [752, 741, 11, 17]
+  head: [740, 676]
+  tongue: [707, 793, 756, 829]

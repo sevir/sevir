@@ -1,0 +1,59 @@
+{{- /* La familia sobre el mundo. Personajes vectorizados de la ilustración (static/images/chars/*.svg),
+       colocados con data/chars.yaml. Escala y origen en coordenadas del mundo (1600×900). */ -}}
+{{- $s := 0.58 }}{{ $ox := 745.0 }}{{ $oy := 238.0 -}}
+{{- $C := hugo.Data.chars -}}
+<div class="layer layer--family" style="--d:44">
+  {{- range $n := slice "dad" "mom" "kidA" "dog" "kidB" }}
+  {{- $c := index $C $n }}
+  {{- $x0 := float (index $c.box 0) }}{{ $y0 := float (index $c.box 1) }}{{ $w := float (index $c.box 2) }}{{ $h := float (index $c.box 3) -}}
+  {{- $src := printf "images/chars/%s.svg" $n | relURL -}}
+  {{- $L := div (add $ox (mul $x0 $s)) 16.0 }}{{ $T := div (add $oy (mul $y0 $s)) 9.0 -}}
+  {{- $W := div (mul $w $s) 16.0 }}{{ $H := div (mul $h $s) 9.0 -}}
+  {{- $cut := sub (float (index $c "neck")) $y0 -}}
+  <div class="char char--{{ $n }}" data-who="{{ $n }}"
+       data-hx="{{ div (add $ox (mul (float (index $c.head 0)) $s)) 16.0 }}" data-hy="{{ div (add $oy (mul (float (index $c.head 1)) $s)) 9.0 }}"
+       style="left:{{ $L }}%;top:{{ $T }}%;width:{{ $W }}%;height:{{ $H }}%;--neck:{{ div (mul (sub $cut 8) 100.0) $h }}%;--neckb:{{ div (mul (sub $h $cut) 100.0) $h }}%;--px:{{ div (mul (sub (float (index $c.pivot 0)) $x0) 100.0) $w }}%;--py:{{ div (mul (sub (float (index $c.pivot 1)) $y0) 100.0) $h }}%">
+    <div class="char__in">
+      <img class="char__body" src="{{ $src }}" alt="" draggable="false" />
+      <div class="char__head">
+        <img src="{{ $src }}" alt="" draggable="false" />
+        {{- if eq $n "dog" }}
+        {{- $t := $c.tongue }}
+        <img class="char__tongue" src="{{ "images/chars/dog-tongue.svg" | relURL }}" alt="" draggable="false"
+             style="left:{{ div (mul (sub (float (index $t 0)) $x0) 100.0) $w }}%;top:{{ div (mul (sub (float (index $t 1)) $y0) 100.0) $h }}%;width:{{ div (mul (sub (float (index $t 2)) (float (index $t 0))) 100.0) $w }}%" />
+        {{- end }}
+        <svg class="char__lids" viewBox="{{ $x0 }} {{ $y0 }} {{ $w }} {{ $h }}" preserveAspectRatio="none" aria-hidden="true">
+          {{- range $e := $c.eyes }}
+          {{- $cx := float (index $e 0) }}{{ $cy := float (index $e 1) }}{{ $rx := float (index $e 2) }}{{ $ry := float (index $e 3) }}
+          <g class="lid"><ellipse cx="{{ $cx }}" cy="{{ $cy }}" rx="{{ add $rx 3 }}" ry="{{ add $ry 3 }}" fill="{{ $c.skin }}"/><path d="M{{ sub $cx $rx }} {{ add $cy (div $ry 3) }} Q{{ $cx }} {{ add $cy (div (mul $ry 4) 5) }} {{ add $cx $rx }} {{ add $cy (div $ry 3) }}" class="lid__line"/></g>
+          {{- end }}
+        </svg>
+      </div>
+    </div>
+    <button class="char__hit" type="button" aria-label="{{ T (printf "char_%s" (cond (eq $n "mom") "partner" (cond (eq $n "dad") "doctor" $n))) }}"></button>
+  </div>
+  {{- end }}
+
+  {{- /* bombilla de idea sobre el doctor */}}
+  <svg class="idea" viewBox="0 0 60 80" aria-hidden="true" style="left:{{ div 1070.0 16 }}%;top:{{ div 172.0 9 }}%">
+    <g class="idea__rays"><path d="M30 -8 v8 M6 6 l7 7 M54 6 l-7 7 M-4 30 h9 M64 30 h-9"/></g>
+    <path d="M30 10 a20 20 0 0 1 12 36 v8 h-24 v-8 a20 20 0 0 1 12 -36 Z" class="idea__bulb"/>
+    <path d="M20 58 h20 M21 64 h18 M24 70 h12" class="idea__base"/>
+    <path d="M24 34 l6 -8 l6 8" class="idea__fil"/>
+  </svg>
+
+  <div class="bubble bubble--hero" data-bubble role="status" aria-live="polite"><span data-bubble-text>{{ T "hero_bubble" }}</span></div>
+  <span class="hero-sfx" data-sfx aria-hidden="true"></span>
+  <span class="burst" data-burst aria-hidden="true"></span>
+</div>
+
+{{- /* ── 7 · PRIMER PLANO ──────────────────────────────────── */}}
+<svg class="layer layer--front" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true" style="--d:60">
+  <path d="M-40 940 Q30 820 80 860 Q110 790 150 850 Q190 800 210 870 Q240 830 260 940 Z" class="tuft"/>
+  <path d="M1400 940 Q1440 830 1480 870 Q1510 800 1550 860 Q1590 810 1640 880 L1640 940 Z" class="tuft"/>
+  <g class="butterfly">
+    <g class="butterfly__wings"><path d="M0 0 C-14 -20 -30 -6 -16 6 C-26 14 -10 24 0 6 Z" class="wing"/><path d="M0 0 C14 -20 30 -6 16 6 C26 14 10 24 0 6 Z" class="wing"/></g>
+    <path d="M0 -6 v16" class="ink"/>
+  </g>
+  <text x="1330" y="770" class="sfx-pop" transform="rotate(-12 1330 770)">PIKOON!</text>
+</svg>

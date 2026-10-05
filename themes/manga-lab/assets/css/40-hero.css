@@ -1,0 +1,238 @@
+/* ── Héroe: escenario y mundo por capas ─────────────────── */
+.hero{position:relative;border-bottom:var(--bw) solid var(--line);background:var(--sky);overflow:hidden}
+.hero__stage{position:relative;width:100%;height:calc(100vh - 64px);min-height:560px;max-height:960px;overflow:hidden;container-type:size}
+/* El mundo mantiene 16:9 y cubre el escenario; JS lo reencuadra para no perder a la familia */
+.world{position:absolute;aspect-ratio:16/9;width:max(100cqw,calc(100cqh * 16 / 9));left:50%;top:50%;transform:translate(-50%,-50%);container-type:inline-size;--mx:0;--my:0;--sy:0}
+.world.is-framed{left:0;top:0;transform:none}
+.layer{position:absolute;inset:-4%;width:108%;height:108%;max-width:none;display:block;
+  transform:translate3d(calc(var(--mx) * var(--d) * -1px),calc(var(--my) * var(--d) * -.6px + var(--sy) * var(--d) * .9px),0);will-change:transform}
+.layer--family{pointer-events:none}
+.layer--front{pointer-events:none}
+
+/* Texto del héroe */
+.hero__copy{position:absolute;z-index:5;left:max(16px,calc((100vw - var(--wrap))/2 + 16px));top:clamp(18px,4.5vh,56px);max-width:min(560px,44vw)}
+.title-logo{margin:10px 0 0;line-height:.85;display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.title-logo__dr{font:400 clamp(44px,5.6vw,84px)/1 var(--f-display);color:#fff;-webkit-text-stroke:3px #141414;paint-order:stroke fill;text-shadow:5px 5px 0 #141414;transform:rotate(-8deg) translateY(-6px);display:inline-block}
+.title-logo__name{display:inline-flex}
+.title-logo__name span{font:400 clamp(70px,9.6vw,150px)/.9 var(--f-display);color:var(--yellow);-webkit-text-stroke:4px #141414;paint-order:stroke fill;text-shadow:6px 6px 0 #141414;display:inline-block;
+  animation:letter-in .7s cubic-bezier(.2,1.8,.4,1) both;animation-delay:calc(var(--i) * 90ms + 200ms)}
+.title-logo__name span:nth-child(odd){color:var(--red);transform:rotate(-4deg)}
+.title-logo__name span:nth-child(even){transform:rotate(5deg) translateY(-6px)}
+@keyframes letter-in{from{opacity:0;transform:translateY(-120px) rotate(-30deg) scale(.4)}}
+.title-kana{margin:6px 0 0;font:400 clamp(16px,1.6vw,22px)/1 var(--f-kana);letter-spacing:6px;color:#fff;-webkit-text-stroke:1px #141414;paint-order:stroke fill;text-shadow:2px 2px 0 #141414}
+.hero__sub{font:700 clamp(15px,1.4vw,19px)/1.4 var(--f-letter);background:#fff;color:#141414;border:var(--bw) solid #141414;padding:10px 14px;margin:14px 0 18px;box-shadow:4px 4px 0 #141414;max-width:440px}
+.hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin:0}
+.hero__hint{display:inline-block;margin:14px 0 0;font:700 14px var(--f-letter);color:#141414;background:#fff;border:2px solid #141414;border-radius:999px;padding:4px 12px}
+.hero__hint .hand{display:inline-block;animation:point 1s ease-in-out infinite alternate}
+@keyframes point{to{transform:translateX(6px)}}
+.hero__speed{position:absolute;left:0;right:0;bottom:0;height:10px;z-index:6;background:repeating-linear-gradient(90deg,#141414 0 22px,transparent 22px 30px)}
+
+/* ── Trazo y color del mundo ───────────────────────────── */
+.layer path,.layer circle,.layer rect,.layer ellipse{stroke-linejoin:round;stroke-linecap:round}
+.sky-top{stop-color:#58B9F5}.sky-mid{stop-color:#A9E1FF}.sky-low{stop-color:#E8F8FF}
+.sky-tone{opacity:.07}
+.cloud{fill:#fff;stroke:#141414;stroke-width:3.5}
+.cloud__line{fill:none;stroke:#141414;stroke-width:2.4;opacity:.55}
+.cloud__shade{fill:none;stroke:#BFE6FF;stroke-width:8;opacity:.9}
+.ray{fill:#FFB020;stroke:#141414;stroke-width:2.6}
+.ray--b{fill:#FFD234}
+.sun__disc{fill:#FFD234;stroke:#141414;stroke-width:4}
+.sun__tone{opacity:.12}
+.sun__shine{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;opacity:.85}
+.moon-cut{fill:var(--sky-n,#1B2452);opacity:0}
+.moon-craters{fill:#E8DFA8;opacity:0}
+.star{fill:#FFE27A;stroke:#141414;stroke-width:1.3;opacity:0}
+.ink{fill:none;stroke:#141414;stroke-width:3.5}
+.ink--thick{stroke-width:7}
+.ink-thin{fill:none;stroke:#141414;stroke-width:2.2}
+.ink-fill{fill:#141414}
+.bird{fill:none;stroke:#141414;stroke-width:3.4;stroke-linecap:round}
+.balloon__env{fill:#FF7FB5;stroke:#141414;stroke-width:3.5}
+.balloon__seam{fill:none;stroke:#141414;stroke-width:2}
+.balloon__band{fill:none;stroke:#FFD234;stroke-width:10}
+.balloon__txt{font:400 20px var(--f-display);letter-spacing:2px;fill:#141414}
+.balloon__basket{fill:#B5703A;stroke:#141414;stroke-width:3}
+.banner{fill:#fff;stroke:#141414;stroke-width:3}
+.banner__txt{font:400 24px var(--f-display);letter-spacing:2px;fill:#E8413A}
+.rocket__body{fill:#F4F4F0;stroke:#141414;stroke-width:3.2}
+.rocket__win{fill:#9FD8FF;stroke:#141414;stroke-width:3}
+.rocket__fin{fill:#E8413A;stroke:#141414;stroke-width:3}
+.rocket__fire{fill:#FFB020;stroke:#141414;stroke-width:2.6;transform-box:fill-box;transform-origin:100% 50%;animation:flick .12s infinite alternate}
+@keyframes flick{to{transform:scaleX(1.6)}}
+
+.mount{fill:#86CBB4;stroke:#141414;stroke-width:3.5}
+.mount--b{fill:#A6D8E8}
+.snow{fill:#fff;stroke:#141414;stroke-width:2.8}
+.hill{fill:#8CD66F;stroke:#141414;stroke-width:3.5}
+.hill--b{fill:#B4E79A}
+.hill__line{fill:none;stroke:#141414;stroke-width:2.4;opacity:.45}
+.trunk{fill:#9A6234;stroke:#141414;stroke-width:3}
+.tree{fill:#3FAE4F;stroke:#141414;stroke-width:3.5}
+.pine{fill:#2E9A55;stroke:#141414;stroke-width:3.5}
+.tree__shine{fill:none;stroke:#9BE38F;stroke-width:7}
+.tree__shade{fill:#141414;opacity:.16}
+.wall{fill:#FFF3D6;stroke:#141414;stroke-width:3.2}
+.wall--w{fill:#fff}.wall--b{fill:#DDEBFF}.wall--y{fill:#FFE79A}
+.wall--lab{fill:#F4F1EA}
+.roof{stroke:#141414;stroke-width:3.4}
+.roof--red{fill:#E8413A}.roof--blue{fill:#2F8FE0}
+.dot-w{fill:#fff;stroke:#141414;stroke-width:2.4}
+.band{fill:none;stroke:#2F8FE0;stroke-width:10}
+.win{fill:#9FD8FF;stroke:#141414;stroke-width:3}
+.door{fill:#B5703A;stroke:#141414;stroke-width:3}
+.flag{fill:#FFD234;stroke:#141414;stroke-width:2.6}
+.mill__blade{fill:#fff;stroke:#141414;stroke-width:2.6}
+.beacon{fill:#E8413A;stroke:#141414;stroke-width:2.6}
+.dome{fill:#A9C8E0;stroke:#141414;stroke-width:3.6}
+.dome__shine{fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;opacity:.8}
+.dome__slit{fill:#2b3440;stroke:#141414;stroke-width:3}
+.tube{fill:#E8413A;stroke:#141414;stroke-width:3}
+.tube__ring{fill:#FFD234;stroke:#141414;stroke-width:3}
+.eave{fill:#2F8FE0;stroke:#141414;stroke-width:3.4}
+.sign{fill:#FFD234;stroke:#141414;stroke-width:3.4}
+.sign__txt{font:400 34px var(--f-display);letter-spacing:4px;fill:#141414}
+.win--lab{fill:#BDE6FF}
+.door--lab{fill:#5C6B7A;stroke:#141414;stroke-width:3.4}
+.knob{fill:#FFD234;stroke:#141414;stroke-width:1.6}
+.step{fill:#C9C2B4;stroke:#141414;stroke-width:3}
+.gear__body{fill:#B9C3CF;stroke:#141414;stroke-width:3}
+.gear__hole{fill:#5C6B7A;stroke:#141414;stroke-width:3}
+.chimney{fill:#E8413A;stroke:#141414;stroke-width:3.2}
+.chimney__cap{fill:#5C6B7A;stroke:#141414;stroke-width:3}
+.glyph{font:700 26px var(--f-mono);fill:#141414;text-anchor:middle;opacity:0}
+.pipe{fill:none;stroke:#141414;stroke-width:12}
+.pipe{stroke:#141414}
+.flask{fill:#E8F7FF;stroke:#141414;stroke-width:3}
+.flask__liquid{fill:#4CB848;stroke:#141414;stroke-width:2}
+.bubble-dot{fill:#fff;stroke:#141414;stroke-width:1.6;opacity:0}
+.wave{fill:none;stroke:#E8413A;stroke-width:4.5;stroke-linecap:round;opacity:0}
+.sfx-kana{font:400 34px var(--f-kana);fill:#fff;stroke:#141414;stroke-width:4;paint-order:stroke fill}
+.grass{fill:#62C04B}
+.grass__edge{fill:none;stroke:#141414;stroke-width:3.5}
+.road{fill:#F2D8A7;stroke:#141414;stroke-width:3.4}
+.road__line{fill:none;stroke:#C9A86A;stroke-width:4;stroke-dasharray:12 14}
+.fence__post{fill:#fff;stroke:#141414;stroke-width:2.6}
+.fence__rail{fill:none;stroke:#141414;stroke-width:4}
+.blade{fill:none;stroke:#2F7A26;stroke-width:2.6}
+.shadows ellipse{fill:#141414;opacity:.18}
+.leaf{fill:#3FAE4F;stroke:#141414;stroke-width:1.8}
+.flower__head circle{fill:#fff;stroke:#141414;stroke-width:2.2}
+.flower__head .flower__c{fill:#FFD234}
+.f-r .flower__head circle:not(.flower__c){fill:#FF8FA0}.f-p .flower__head circle:not(.flower__c){fill:#F7C2FF}.f-b .flower__head circle:not(.flower__c){fill:#A9D8FF}
+.rock path:first-child{fill:#C9C2B4;stroke:#141414;stroke-width:3}
+.tuft{fill:#3FA34D;stroke:#141414;stroke-width:3.5}
+.wing{fill:#FFD234;stroke:#141414;stroke-width:2.4}
+.sfx-pop{font:400 58px var(--f-display);fill:#FFD234;stroke:#141414;stroke-width:4;paint-order:stroke fill;letter-spacing:2px}
+
+/* ── Animaciones del mundo ─────────────────────────────── */
+.cl{transform:translate(-320px,var(--y)) scale(var(--s));animation:drift var(--dur) linear infinite;animation-delay:var(--del)}
+@keyframes drift{from{transform:translate(-320px,var(--y)) scale(var(--s))}to{transform:translate(1700px,var(--y)) scale(var(--s))}}
+.sun__rays{animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.balloon__bob{animation:bob-b 6s ease-in-out infinite}
+@keyframes bob-b{50%{transform:translate(14px,-16px) rotate(3deg)}}
+.birds{animation:birds 30s linear infinite}
+@keyframes birds{from{transform:translate(-200px,200px)}to{transform:translate(1800px,60px)}}
+.bird{transform-box:fill-box;transform-origin:50% 100%;animation:flap .45s ease-in-out infinite alternate}
+.bird--2{animation-delay:-.2s}.bird--3{animation-delay:-.33s}
+@keyframes flap{to{transform:scaleY(.35)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;animation-delay:calc(var(--sd) * -1s)}
+@keyframes sway{50%{rotate:2deg}}
+.mill{animation:spin 9s linear infinite}
+.gear--a{animation:spin 7s linear infinite}
+.gear--b{animation:spin 4s linear infinite reverse}
+.wave{animation:wave 1.8s ease-out infinite}.w2{animation-delay:.3s}.w3{animation-delay:.6s}
+@keyframes wave{30%{opacity:1}100%{opacity:0}}
+.beacon{animation:beacon 1s steps(2) infinite}
+@keyframes beacon{50%{fill:#FFD234}}
+.glyph{animation:rise 8s ease-out infinite;animation-delay:calc(var(--i) * 1s)}
+.glyph:nth-child(odd){--dx:-60px}.glyph:nth-child(even){--dx:70px}.glyph:nth-child(3n){--dx:10px}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.5)}12%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-200px) scale(1.25) rotate(14deg)}}
+.bubble-dot{animation:bub 2.4s ease-in infinite}.b2{animation-delay:1.2s}
+@keyframes bub{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-60px)}}
+.sfx-kana{animation:jiggle .45s steps(2) infinite}
+@keyframes jiggle{50%{transform:rotate(-4deg) translate(4px,-3px)}}
+.sfx-pop{transform-box:fill-box;transform-origin:center;animation:pop 4s cubic-bezier(.2,1.8,.4,1) infinite}
+@keyframes pop{0%,58%{opacity:0;scale:.2}66%{opacity:1;scale:1.15}74%,90%{opacity:1;scale:1}100%{opacity:0;scale:1}}
+.flower__head{transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+.butterfly{animation:fly 18s ease-in-out infinite}
+@keyframes fly{0%{transform:translate(300px,700px)}25%{transform:translate(560px,600px)}50%{transform:translate(820px,760px)}75%{transform:translate(500px,820px)}100%{transform:translate(300px,700px)}}
+.butterfly__wings{transform-box:fill-box;transform-origin:center;animation:flutter .18s ease-in-out infinite alternate}
+@keyframes flutter{to{transform:scaleX(.35)}}
+
+/* ── Personajes ────────────────────────────────────────── */
+.char{position:absolute;pointer-events:none;transform-origin:50% 100%}
+.char__in{position:absolute;inset:0}
+.char img{position:absolute;left:0;top:0;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+.char__body{clip-path:inset(var(--neck) 0 0 0)}
+.char__head{position:absolute;inset:0}
+.char__head > img:first-child{clip-path:inset(0 0 var(--neckb) 0)}
+.char__tongue{display:none}
+.char__lids{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);animation:blink 5s infinite}
+.lid__line{fill:none;stroke:#141414;stroke-width:3}
+.char--mom .lid{animation-delay:-1.7s}.char--kidA .lid{animation-delay:-3.1s;animation-duration:4.2s}
+.char--kidB .lid{animation-delay:-.9s;animation-duration:3.8s}.char--dog .lid{animation-delay:-2.4s;animation-duration:4.6s}
+@keyframes blink{0%,92%,100%{transform:scaleY(0)}95%,97%{transform:scaleY(1)}}
+.char__hit{position:absolute;left:12%;right:12%;top:0;bottom:4%;border:0;padding:0;background:transparent;cursor:pointer;pointer-events:auto;border-radius:40% 40% 10% 10%}
+.char__hit:focus-visible{outline:3px dashed var(--red);outline-offset:2px}
+.char.is-jump{animation:none}
+@keyframes jump{0%{transform:translateY(0)}35%{transform:translateY(-9%) scale(1.02,.98)}70%{transform:translateY(0) scale(1.04,.95)}100%{transform:none}}
+
+/* bombilla de idea */
+.idea{position:absolute;width:3.2%;overflow:visible;opacity:0;animation:idea 9s ease-in-out infinite 2s}
+.idea__bulb{fill:#FFE27A;stroke:#141414;stroke-width:3.4}
+.idea__base{fill:none;stroke:#141414;stroke-width:3.4}
+.idea__fil{fill:none;stroke:#E8413A;stroke-width:2.6}
+.idea__rays path{fill:none;stroke:#141414;stroke-width:3.4;stroke-linecap:round}
+@keyframes idea{0%,62%,100%{opacity:0;transform:translateY(20px) scale(.4)}68%{opacity:1;transform:translateY(0) scale(1.15)}72%,90%{opacity:1;transform:scale(1)}}
+
+/* Bocadillo, onomatopeya y estallido */
+.bubble--hero{position:absolute;z-index:4;left:0;top:0;max-width:24cqw;min-width:150px;font:700 clamp(13px,1.15cqw,19px)/1.3 var(--f-letter);border-radius:50%/44%;padding:14px 22px;text-align:center;transform:translate(-50%,-100%);pointer-events:none;transition:left .25s,top .25s}
+.bubble--hero.is-pop{animation:bubble-pop .35s cubic-bezier(.2,1.8,.4,1)}
+@keyframes bubble-pop{from{scale:.4;opacity:0}}
+.bubble--hero::after{left:calc(50% + var(--tail,0px) - 14px)}
+.hero-sfx{position:absolute;z-index:4;font:400 clamp(30px,4.2cqw,70px)/1 var(--f-kana);color:#fff;-webkit-text-stroke:3px #141414;paint-order:stroke fill;text-shadow:4px 4px 0 #141414;pointer-events:none;opacity:0;transform:translate(-50%,-50%) rotate(-12deg)}
+.hero-sfx.is-on{animation:sfx 1.3s cubic-bezier(.2,1.8,.4,1) forwards}
+@keyframes sfx{0%{opacity:0;scale:.2}15%{opacity:1;scale:1.25}30%,75%{opacity:1;scale:1}100%{opacity:0;scale:1.1}}
+.burst{position:absolute;z-index:0;width:34cqw;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:0;
+  background:repeating-conic-gradient(#141414 0deg 1.4deg,transparent 1.4deg 7deg);
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 34%,transparent 70%);mask:radial-gradient(circle,transparent 30%,#000 34%,transparent 70%)}
+.burst.is-on{animation:burst .7s ease-out}
+@keyframes burst{0%{opacity:.9;scale:.5}100%{opacity:0;scale:1.4}}
+
+/* ── Edición nocturna ──────────────────────────────────── */
+[data-theme="dark"] .hero{background:#1B2452}
+[data-theme="dark"] .sky-top{stop-color:#0E1638}[data-theme="dark"] .sky-mid{stop-color:#23306A}[data-theme="dark"] .sky-low{stop-color:#3B4A8A}
+[data-theme="dark"] .sky-tone{opacity:.25}
+[data-theme="dark"] .star{opacity:1;animation:twinkle 2.4s ease-in-out infinite;animation-delay:calc(var(--t) * -.4s)}
+@keyframes twinkle{50%{opacity:.3}}
+[data-theme="dark"] .sun__rays,[data-theme="dark"] .sun__shine,[data-theme="dark"] .sun__tone{opacity:0}
+[data-theme="dark"] .sun__disc{fill:#FFF3B0}
+[data-theme="dark"] .moon-cut{opacity:1;fill:#0E1638;stroke:none}
+[data-theme="dark"] .moon-craters{opacity:.7}
+[data-theme="dark"] .cloud{fill:#C9CFE8}[data-theme="dark"] .cloud__shade{stroke:#9AA3C8}
+[data-theme="dark"] .mount{fill:#3E6F70}[data-theme="dark"] .mount--b{fill:#4B6A8C}
+[data-theme="dark"] .hill{fill:#4B8A55}[data-theme="dark"] .hill--b{fill:#5E9A68}
+[data-theme="dark"] .grass{fill:#3A7F37}
+[data-theme="dark"] .win,[data-theme="dark"] .win--lab{fill:#FFD86B}
+[data-theme="dark"] .lab-win{filter:drop-shadow(0 0 10px #FFD86B)}
+[data-theme="dark"] .layer--mid,[data-theme="dark"] .layer--lab,[data-theme="dark"] .layer--ground,[data-theme="dark"] .layer--front{filter:brightness(.82) saturate(.9)}
+[data-theme="dark"] .char__in{filter:brightness(.93)}
+
+/* ── Móvil: el texto va arriba y el escenario encuadra a la familia ── */
+@media (max-width:860px){
+  .hero{display:flex;flex-direction:column-reverse}
+  .hero__copy{position:relative;left:auto;top:auto;max-width:none;padding:22px 16px 10px;background:var(--sky)}
+  .hero__stage{height:min(105vw,560px);min-height:340px;max-height:none}
+  .bubble--hero{max-width:44cqw;padding:8px 12px;font-size:12px}
+}
+
+/* ── Movimiento reducido o pausado ─────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  .hero *,.hero *::before,.hero *::after{animation:none !important;transition:none !important}
+  .layer{transform:none !important}
+}
+[data-motion="off"] .hero *,[data-motion="off"] .hero *::before,[data-motion="off"] .hero *::after{animation-play-state:paused !important}
+/* si no cabe encima de la cabeza, el rabito apunta hacia arriba */
+.bubble--hero.is-low::before,.bubble--hero.is-low::after{display:none}

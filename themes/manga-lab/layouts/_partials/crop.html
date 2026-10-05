@@ -1,0 +1,10 @@
+{{- /* Encuadre de personajes vectorizados. dict "chars" (slice "kidA" "dog") "rect" (slice x y w h) "class" "…" "alt" "…"
+       rect en píxeles de la ilustración; los personajes se apilan en el orden dado. */ -}}
+{{- $r := .rect }}{{ $rx := float (index $r 0) }}{{ $ry := float (index $r 1) }}{{ $rw := float (index $r 2) }}{{ $rh := float (index $r 3) -}}
+<div class="crop {{ .class }}" style="aspect-ratio:{{ $rw }}/{{ $rh }}" {{ with .alt }}role="img" aria-label="{{ . }}"{{ else }}aria-hidden="true"{{ end }}>
+  {{- range $n := .chars }}
+  {{- $b := (index hugo.Data.chars $n).box }}
+  <img src="{{ printf "images/chars/%s.svg" $n | relURL }}" alt="" loading="lazy" draggable="false"
+       style="left:{{ div (mul (sub (float (index $b 0)) $rx) 100.0) $rw }}%;top:{{ div (mul (sub (float (index $b 1)) $ry) 100.0) $rh }}%;width:{{ div (mul (float (index $b 2)) 100.0) $rw }}%" />
+  {{- end }}
+</div>

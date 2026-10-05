@@ -1,0 +1,15 @@
+# Salida de Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Herramientas locales
+.pando*
+.pando.toml
+*.log
+messages/*
+node_modules/

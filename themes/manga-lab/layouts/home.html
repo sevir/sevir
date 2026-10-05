@@ -1,0 +1,168 @@
+{{ define "main" }}
+{{- $lang := site.Language.Lang -}}
+<main id="content">
+
+  {{- /* ── HÉROE: el mundo del laboratorio con la familia vectorizada ── */}}
+  <section class="hero" aria-label="{{ site.Title }}">
+    <div class="hero__stage" data-stage>
+      <div class="world" data-world>
+        {{ partial "world.html" . }}
+        {{ partial "family.html" . }}
+      </div>
+    </div>
+    <div class="hero__copy">
+      <p class="caption caption--kicker">{{ T "hero_kicker" }}</p>
+      <h1 class="title-logo" aria-label="Dr. SeViR">
+        <span class="title-logo__dr">{{ T "hero_title_a" }}</span>
+        <span class="title-logo__name" aria-hidden="true">{{ range $i, $c := split (T "hero_title_b") "" }}<span style="--i:{{ $i }}">{{ $c }}</span>{{ end }}</span>
+      </h1>
+      <p class="title-kana" aria-hidden="true">{{ T "cover_kana" }}</p>
+      <p class="hero__sub">{{ T "hero_sub" }}</p>
+      <p class="hero__cta">
+        <a class="btn btn--red" href="{{ partial "lab-url.html" . }}">{{ T "hero_cta_lab" }}</a>
+        <a class="btn" href="{{ (site.GetPage "/blog").RelPermalink }}">{{ T "hero_cta_blog" }}</a>
+      </p>
+      <p class="hero__hint"><span class="hand" aria-hidden="true">☞</span> {{ T "hero_hint" }}</p>
+    </div>
+    <div class="hero__speed" aria-hidden="true"></div>
+  </section>
+
+  <script type="application/json" id="quotes">{{ hugo.Data.profile.quotes | jsonify | safeJS }}</script>
+
+  <div class="paper">
+
+  {{- /* ── CAPÍTULO 1: página de presentación ───────────────── */}}
+  <section class="wrap chapter" aria-labelledby="c1">
+    {{ partial "chapter-head.html" (dict "n" "1" "kicker" (T "ch1_kicker") "title" (T "ch1_title") "id" "c1" "kana" "とうじょう") }}
+    <div class="mpage mpage--who">
+      <figure class="mp mp--face mp--yellow pop">
+        <div class="speedlines" aria-hidden="true"></div>
+        {{ partial "crop.html" (dict "chars" (slice "mom" "dad") "rect" (slice 520 0 330 360) "alt" (T "char_doctor")) }}
+        <p class="mbubble mbubble--tr">{{ T "who_bubble" }}</p>
+        <span class="msfx msfx--v" aria-hidden="true">ドキッ</span>
+      </figure>
+
+      {{- with hugo.Data.profile.card }}
+      <article class="mp mp--card pop">
+        <h3 class="mp__label">{{ T "ch1_kicker" }}</h3>
+        <dl class="card__data">
+          <div><dt>{{ T "card_name" }}</dt><dd>{{ .name }}</dd></div>
+          <div><dt>{{ T "card_alias" }}</dt><dd class="hl">{{ .alias }}</dd></div>
+          <div><dt>{{ T "card_job" }}</dt><dd>{{ index .job $lang }}</dd></div>
+          <div><dt>{{ T "card_base" }}</dt><dd>{{ index .base $lang }}</dd></div>
+          <div><dt>{{ T "card_power" }}</dt><dd>{{ index .power $lang }}</dd></div>
+          <div><dt>{{ T "card_weak" }}</dt><dd>{{ index .weak $lang }}</dd></div>
+        </dl>
+        <span class="stamp">S-RANK</span>
+      </article>
+      {{- end }}
+
+      <div class="mp mp--story pop">
+        {{- range $i, $p := index hugo.Data.profile.intro $lang }}
+          <p class="caption">{{ $p }}</p>
+        {{- end }}
+      </div>
+
+      <figure class="mp mp--kids mp--pink pop">
+        {{ partial "crop.html" (dict "chars" (slice "kidA" "dog" "kidB") "rect" (slice 430 380 610 470) "alt" (printf "%s · %s" (T "char_kidA") (T "char_kidB"))) }}
+        <p class="mbubble mbubble--tl">{{ T "kids_bubble" }}</p>
+      </figure>
+      <figure class="mp mp--mom mp--blue pop">
+        <div class="speedlines speedlines--soft" aria-hidden="true"></div>
+        {{ partial "crop.html" (dict "chars" (slice "mom") "rect" (slice 760 40 280 330) "alt" (T "char_partner")) }}
+        <p class="mbubble mbubble--bl">{{ T "partner_bubble" }}</p>
+      </figure>
+      <figure class="mp mp--dog mp--red pop">
+        <div class="speedlines" aria-hidden="true"></div>
+        {{ partial "crop.html" (dict "chars" (slice "dog") "rect" (slice 640 660 200 210) "alt" (T "char_dog")) }}
+        <span class="msfx msfx--big" aria-hidden="true">ワン!</span>
+        <p class="mbubble mbubble--tr mbubble--s">{{ T "dog_bubble" }}</p>
+      </figure>
+    </div>
+  </section>
+
+  {{- /* ── CAPÍTULO 2: inventos ──────────────────────────── */}}
+  <section class="wrap chapter" aria-labelledby="c2">
+    {{ partial "chapter-head.html" (dict "n" "2" "kicker" (T "ch2_kicker") "title" (T "ch2_title") "id" "c2" "kana" "はつめい") }}
+    <div class="inventions">
+      {{- range where hugo.Data.inventions "home" true }}
+        {{ partial "invention-card.html" (dict "i" . "lang" $lang) }}
+      {{- end }}
+    </div>
+    <p class="more"><a class="btn btn--yellow" href="{{ partial "lab-url.html" . }}">{{ T "ch2_more" }} →</a></p>
+  </section>
+
+  {{- /* ── CAPÍTULO 3: historia (línea temporal con el doctor caminando) ── */}}
+  <section class="wrap chapter" aria-labelledby="historia">
+    {{ partial "chapter-head.html" (dict "n" "3" "kicker" (T "ch3_kicker") "title" (T "ch3_title") "id" "historia" "kana" "れきし") }}
+    <ol class="timeline" data-timeline>
+      <li class="timeline__walker" aria-hidden="true">{{ partial "head-face.html" }}</li>
+      {{- range $i, $e := hugo.Data.timeline }}
+      <li class="tl {{ if modBool $i 2 }}tl--l{{ else }}tl--r{{ end }} pop">
+        <span class="tl__year">{{ .year }}</span>
+        <div class="panel tl__panel">
+          <span class="tl__sfx" aria-hidden="true">{{ .sfx }}</span>
+          <h3 class="tl__title">{{ index .title $lang }}</h3>
+          <p>{{ index .text $lang }}</p>
+        </div>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+
+  {{- /* ── CAPÍTULO 4: poder ────────────────────────────── */}}
+  <section class="wrap chapter" aria-labelledby="c4">
+    {{ partial "chapter-head.html" (dict "n" "4" "kicker" (T "ch4_kicker") "title" (T "ch4_title") "id" "c4" "kana" "パワー") }}
+    <div class="panel powers pop">
+      <div class="speedlines speedlines--soft" aria-hidden="true"></div>
+      <ul class="powers__list">
+        {{- range hugo.Data.powers }}
+        <li class="power power--{{ .color }}" style="--lvl:{{ .level }}">
+          <span class="power__name">{{ .name }}</span>
+          <span class="power__bar" role="meter" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{ .level }}" aria-label="{{ .name }}">
+            {{- range seq 10 }}<i style="--s:{{ . }}"></i>{{ end -}}
+          </span>
+          <span class="power__note">{{ index .note $lang }}</span>
+          {{- if ge .level 10 }}<span class="power__max" aria-hidden="true">MAX!</span>{{ end }}
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+  </section>
+
+  {{- /* ── CAPÍTULO 5: blog ─────────────────────────────── */}}
+  {{- $posts := where site.RegularPages "Section" "blog" }}
+  {{- if not $posts }}{{ $posts = where (index hugo.Sites 0).RegularPages "Section" "blog" }}{{ end }}
+  <section class="wrap chapter" aria-labelledby="c5">
+    {{ partial "chapter-head.html" (dict "n" "5" "kicker" (T "ch5_kicker") "title" (T "ch5_title") "id" "c5" "kana" "ノート") }}
+    <div class="posts">
+      {{- range first 3 $posts.ByDate.Reverse }}{{ partial "blog/card.html" . }}{{ end }}
+    </div>
+    <p class="more"><a class="btn" href="{{ (site.GetPage "/blog").RelPermalink }}">{{ T "ch5_more" }} →</a></p>
+  </section>
+
+  {{- /* ── CAPÍTULO 6: viñeta final ─────────────────────── */}}
+  <section class="wrap chapter chapter--end" aria-labelledby="c6">
+    {{ partial "chapter-head.html" (dict "n" "6" "kicker" (T "ch6_kicker") "title" (T "ch6_title") "id" "c6" "kana" "れんらく") }}
+    <figure class="panel splash pop">
+      <div class="speedlines" aria-hidden="true"></div>
+      {{ partial "crop.html" (dict "chars" (slice "dad" "mom" "kidA" "dog" "kidB") "rect" (slice 380 0 720 1031) "class" "splash__family" "alt" (T "family_caption")) }}
+      <div class="mbubble mbubble--big">
+        <p>{{ T "ch6_text" }}</p>
+        <p class="contact__links">
+          {{- with site.Params.social }}
+          <a class="btn btn--red" href="{{ .github }}" rel="me">GitHub · sevir</a>
+          <a class="btn" href="{{ .githubOrg }}">GitHub · DIGIO</a>
+          <a class="btn btn--blue" href="{{ .linkedin }}" rel="me">LinkedIn</a>
+          <a class="btn btn--yellow" href="{{ .company }}">digio.es</a>
+          {{- end }}
+        </p>
+      </div>
+      <span class="splash__end" aria-hidden="true">{{ T "end_kana" }}</span>
+      <figcaption class="caption splash__tbc">{{ T "to_be_continued" }}</figcaption>
+    </figure>
+  </section>
+
+  </div>
+</main>
+{{ end }}

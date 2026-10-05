@@ -1,0 +1,16 @@
+{{ define "main" }}
+<main id="content">
+  {{ partial "page-hero.html" (dict "kicker" (.Params.kicker | default site.Title) "title" .Title "lead" .Description "sfx" .Params.sfx) }}
+  <div class="paper">
+    <div class="wrap wrap--narrow section">
+      {{- if .Params.family }}
+      <figure class="panel panel--photo panel--tilt">
+        <img src="{{ site.Params.familyImage | relURL }}" alt="{{ T "family_caption" }}" width="1526" height="1031" />
+        <figcaption class="caption caption--float">{{ T "family_caption" }}</figcaption>
+      </figure>
+      {{- end }}
+      <div class="panel prose">{{ .Content }}</div>
+    </div>
+  </div>
+</main>
+{{ end }}
