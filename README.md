@@ -69,7 +69,6 @@ If you are looking for company open source, go to [github.com/madeindigio](https
 | [**ajax-ci**](https://github.com/sevir/ajax-ci) | AJAX sparks library for CodeIgniter. |
 | [**Creamture**](https://github.com/sevir/Creamture) | PHP framework on top of CodeIgniter for enterprise projects. |
 | [**logging-with-fluentbit**](https://github.com/sevir/logging-with-fluentbit) | Fluent Bit TCP logging notes for Ruby, Node, PHP, Groovy, Java. |
-| [**TiYQL**](https://github.com/sevir/TiYQL) | Titanium Mobile + YQL link reader. |
 | [**Findmehere**](https://github.com/sevir/Findmehere) | Android “find me here” app (Titanium). |
 
 ---
