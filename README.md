@@ -55,6 +55,7 @@ If you are looking for company open source, go to [github.com/madeindigio](https
 
 | Repository | What it is |
 |---|---|
+| [**Xarast**](https://github.com/sevir/Xarast) | A Rust implementation multiplatform of the old Vector program Xara Xtreme. |
 | [**kvage**](https://github.com/sevir/kvage) | Tiny key-value CLI that stores secrets in a YAML file. |
 | [**essh**](https://github.com/sevir/essh) / [**essh_utils**](https://github.com/sevir/essh_utils) | Extended SSH + Lua libraries for task-oriented remote work. |
 | [**gluassh**](https://github.com/sevir/gluassh), [**gluagum**](https://github.com/sevir/gluagum), [**gluaarchive**](https://github.com/sevir/gluaarchive), [**gluaaws**](https://github.com/sevir/gluaaws), [**gluawatch**](https://github.com/sevir/gluawatch), [**gluamdns**](https://github.com/sevir/gluamdns) | GopherLua extensions (SSH, Gum, archives/deploy, AWS, file watch, mDNS). |
